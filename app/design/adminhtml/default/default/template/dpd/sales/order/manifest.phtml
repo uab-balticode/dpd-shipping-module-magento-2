@@ -1,0 +1,233 @@
+<?php
+/**
+ * 2015 UAB BaltiCode
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License available
+ * through the world-wide-web at this URL:
+ * http://www.gnu.org/licenses/gpl-3.0.txt
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to info@balticode.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to
+ * newer versions in the future.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright   Copyright (c) 2015 UAB Balticode (http://balticode.com/)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ * @see         Balticode_Dpd_Block_Adminhtml_Sales_Order_Manifest
+ */
+?>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=7" />
+        <title><?php echo __('DPD Manifest'); ?></title>
+        <link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('css/dpd_manifest.css'); ?>" media="all" />
+    </head>
+    <body>
+<table class="header_top" cellspacing="0" cellpadding="0">
+    <tr>
+        <td class="label_company allcaps"><?php echo $this->getDpdRequisition('name'); ?></td>
+        <td class="label_phone"><?php echo __('Phone:'); ?></td>
+        <td class="value_phone"><?php echo $this->getDpdRequisition('tel'); ?></td>
+        <td colspan="2" rowspan="4" class="logo"><img src="<?php echo $this->getSkinUrl('images/logo.png'); ?>" alt="DPD" /></td>
+    </tr>
+    <tr>
+        <td class="label_vat label_vat_code allcpas"><?php echo __('VAT'); ?> <?php echo $this->getDpdRequisition('pvm'); ?></td>
+        <td class="label_fax"><?php echo __('Fax:') ?></td>
+        <td class="value_fax"><?php echo $this->getDpdRequisition('fax'); ?></td>
+    </tr>
+    <tr>
+        <td class="value_street allcaps" colspan="3"><?php echo $this->getDpdRequisition('address'); ?></td>
+    </tr>
+        <tr>
+        <td colspan="3"></td>
+    </tr>
+</table>
+<table class="header">
+    <tr>
+        <td class="line_h15 bold label_manifest_nr"><div class="bottom"><?php echo __('Manifest no.'); ?></div></td>
+        <td class="line_h15 value_manifest_nr"><div class="bottom"><?php echo $this->getManifestNr(); ?></div></td>
+        <td class="line_h15 label_client"><div class="bottom"><?php echo __('Client:'); ?></div></td>
+        <td class="line_h15 line_w160 value_client"><div class="bottom"><?php echo $this->getPickUpData('client'); ?></div></td>
+        <td class="line_h15 label_vat_code"><div class="bottom"><?php echo __('VAT code'); ?></div></td>
+        <td class="line_h15 label_sphone"><div class="bottom"><?php echo __('P. no.'); ?></div></td>
+    </tr>
+    <tr>
+        <td class="label_done_date"><?php echo __('Closed'); ?></td>
+        <td class="value_done_date"><?php echo date('Y-m-d'); ?></td>
+        <td class="value_client_id"><?php echo $this->getPickUpData('client_id'); ?></td>
+        <td class="value_client_street allcaps"><?php echo $this->getPickUpData('client_street'); ?></td>
+        <td class="value_client_vat_code allcaps"><?php echo $this->getPickUpData('client_vat_code'); ?></td>
+        <td class="value_client_phone"><?php echo $this->getPickUpData('client_phone'); ?></td>
+    </tr>
+    <tr>
+        <td colspan="3"></td>
+        <td class="allcaps"><?php echo $this->getPickUpData('client_city'); ?></td>
+        <td colspan="2"></td>
+    </tr>
+    <tr>
+        <td colspan="3"></td>
+        <td class="allcaps"><?php echo $this->getPickUpData('client_country_id'); ?>-<?php echo $this->getPickUpData('client_post'); ?></td>
+        <td colspan="2"></td>
+    </tr>
+    <tr>
+        <td colspan="6" class="line_h20"></td>
+    </tr>
+</table>
+<?php if (count($this->getOrdersIds())) { ?>
+    <table class="orders">
+        <tr class="order_head">
+            <td class="label_order_nr"><?php echo __('Row no.'); ?></td>
+            <td class="label_order_number"><?php echo __('Order no.'); ?></td>
+            <td class="label_order_type"><?php echo __('Prcel type'); ?></td>
+            <td class="label_order_arrival"><?php echo __('Recipient'); ?></td>
+            <td class="label_order_phone"><?php echo __('P. no.'); ?></td>
+            <td class="label_order_weight"><?php echo __('Weight'); ?></td>
+
+            <td class="label_order_issn"><?php echo __('ISSN'); ?></td>
+        </tr>
+        <?php $nr = 1; ?>
+        <?php $value_total = 0; ?>
+        <?php $total_qty_ordered = 0; ?>
+        <?php foreach ($this->getOrdersIds() as $orderId) { ?>
+            <tr class="order">
+                <td><?php echo $nr++; ?></td>
+                <td><?php
+                    foreach ($this->getOrderBarcode($orderId) as $barcode)
+                        echo $barcode.'<br>';
+                ?></td>
+                <td><?php echo $this->getOrderType($orderId); ?></td>
+                <td><?php echo $this->getOrderShippingData($orderId, 'firstname');?> <?php echo $this->getOrderShippingData($orderId, 'lastname'); ?><br />
+                    <?php echo $this->getOrderShippingData($orderId, 'street'); ?><br />
+                    <?php echo $this->getOrderShippingData($orderId, 'country_id').'-'.$this->getOrderShippingData($orderId, 'postcode'); ?><br />
+                    <div class="bold"><?php echo $this->getOrderShippingData($orderId, 'city'); ?></div>
+                </td>
+                <td><?php echo $this->getOrderShippingData($orderId, 'telephone'); ?></td>
+                <td><?php echo $this->getOrderData($orderId, 'weight'); ?></td>
+                <td class="center"><div class="checkbox"></div></td>
+            </tr>
+        <?php $value_total+=$this->getOrderData($orderId, 'weight'); ?>
+        <?php $total_qty_ordered += $this->getOrder($orderId)->getData('total_qty_ordered'); ?>
+        <? } ?>
+        <tr>
+            <td class="bold"><?php echo __('Total'); ?></td>
+            <td colspan="3">&nbsp;</td>
+            <td class="bold"><?php echo $value_total; ?></td>
+            <td colspan="2">&nbsp;</td>
+        </tr>
+        <!--tr>
+            <td><?php // echo __('Parcel qty.'); ?></td>
+            <td colspan="6"><?php // echo count($this->getOrdersIds()); ?></td>
+        </tr-->
+        <tr>
+            <td><?php echo __('Number of packages'); ?></td>
+            <td colspan="6"><?php echo $total_qty_ordered; ?></td>
+        </tr>
+    </table>
+<?php } ?>
+<table cellpadding="0" cellspacing="0" width="0" height="0" border="0"><tr><td></td></tr></table>
+<table class="extra" style="page-break-inside: avoid;">
+    <tr>
+        <td class="cell first">
+            <table border="0">
+                <tr>
+                    <td colspan="3" class="bold label_additional"><?php echo __('Additional Services'); ?></td>
+                </tr>
+                <tr>
+                    <td colspan="3"><div class="line line_w200"></div></td>
+                </tr>
+                <tr>
+                    <td class="label_load">
+                        <div class="checkbox"></div><?php echo __('Cargo operations to the sender'); ?>
+                    </td>
+                    <td class="label_wait"><div class="checkbox"></div><?php echo __('Waiting to sender'); ?>
+                    </td>
+                    <td class="label_smin">
+                        <div class="checkbox_dotted"></div><div class="checkbox_dotted checkbox_middle_box"></div><div class="checkbox_dotted"></div>
+                        <?php echo __('min.'); ?>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td class="cell">
+            <table class="issn">
+                <tr>
+                    <td class="bold text_notification_title"><?php echo __('Packaging does not guarantee the lot - ISSN'); ?></td>
+                </tr>
+                <tr>
+                    <td><div class="line line_w350"/></td>
+                </tr>
+
+                <tr>
+                    <td class="notification"><?php echo __('UAB DPD Lithuania is not responsible for improperly packed items. Improper packaging - the packaging, which does not protect the contents of the shipment from the normal transportation hazards and can not guarantee that transported the shipment would not hurt other parcels.') ?></td>
+                </tr>
+                <tr>
+                    <td class="notification"><?php echo __('(Parcels numbers can be noted ISSN column to the number, or by the box below)'); ?></td>
+                </tr>
+
+                <tr>
+                    <td class="value_issn_nr">
+                        <div class="checkbox line_w685 line_h15"></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td class="cell last">
+        <table border="0" cellspacing="0" cellpadding="0" width="747px">
+            <tr>
+                <td class="text_conditions"><?php echo __('* Check and confirm that the indicated and / or record information is correct'); ?></td>
+                <td class="label_sender_signature"><?php echo __('(senders signature)'); ?></td>
+            </tr>
+            <tr>
+                <td class="text_conditions"><?php echo __('* I am aware that __ (record amount) package (s) in which the numbers marked ISSN tag and / or above record, the packaging does not guarantee their safety. I agree that these packages are shipped anyway tiokioje packaging'); ?></td>
+                <td class="bottom line_w150"><div class="line line_w100" /></td>
+            </tr>
+            <tr>
+                <td class="text_conditions" colspan="2"><?php echo __('Packing on my own responsibility'); ?></td>
+            </tr>
+        </table>
+        </td>
+    </tr>
+</table>
+<table cellpadding="0" cellspacing="0" width="0" height="0" border="0"><tr><td></td></tr></table>
+<table class="signature"  style="page-break-inside: avoid;">
+    <tr >
+        <td class="line_w150 center"><?php echo __('Shipper:'); ?></td>
+        <td class="line_w150 center"><?php echo __('Courier:'); ?></td>
+        <td class="line_w150 center"><?php echo __('Arrived:'); ?></td>
+        <td class="line_w150 center"><?php echo __('Departed:'); ?></td>
+    </tr>
+    <tr class="line_h25">
+        <td colspan="4">&nbsp;</td>
+    </tr>
+    <tr style="text-align:center;">
+        <td class="center"><div class="line line_w150"></div></td>
+        <td class="center"><div class="line line_w150"></div></td>
+        <td class="center"><div class="line line_w150"></div></td>
+        <td class="center"><div class="line line_w150"></div></td>
+    </tr>
+    <tr>
+        <td><?php echo __('(Name and signature)'); ?></td>
+        <td><?php echo __('(Name, round, signature)'); ?></td>
+        <td><?php echo __('(Date, time)'); ?></td>
+        <td><?php echo __('(Time)'); ?></td>
+    </tr>
+</table>
+<script type="text/php">
+    $pdf->page_text(-30, -32, "{PAGE_NUM} of {PAGE_COUNT}", Font_Metrics::get_font("serif"), 10, array(0,0,0));
+    $pdf->page_text(0, 0, "sdf", Font_Metrics::get_font("dejavu serif"), 12)
+</script>
+    </body>
+</html>

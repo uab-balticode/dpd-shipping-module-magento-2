@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<layout>
+    <adminhtml_sales_order_index>
+        <reference name="head">
+            <action method="addJs">
+                <script>balticode/dpd.js</script>
+            </action>
+            <action method="addCss">
+                <name>css/dpd.css</name>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="dpd/adminhtml_sales_calldpdcourier" name="dpd" template="dpd/sales/calldpdcourier.phtml" before="-"/>
+        </reference>
+    </adminhtml_sales_order_index>
+    <adminhtml_sales_order_edit_index>
+        <reference name="head">
+            <action method="addJs">
+                <script>balticode/dpd.js</script>
+            </action>
+        </reference>
+    </adminhtml_sales_order_edit_index>
+    <adminhtml_sales_order_create_index>
+        <reference name="head">
+            <action method="addJs">
+                <script>balticode/dpd.js</script>
+            </action>
+        </reference>
+    </adminhtml_sales_order_create_index>
+</layout>

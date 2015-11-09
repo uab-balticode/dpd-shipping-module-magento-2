@@ -1,0 +1,42 @@
+<?php
+/**
+ * 2015 UAB BaltiCode
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License available
+ * through the world-wide-web at this URL:
+ * http://www.gnu.org/licenses/gpl-3.0.txt
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to info@balticode.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to
+ * newer versions in the future.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright   Copyright (c) 2015 UAB Balticode (http://balticode.com/)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ * @see         Balticode_Dpd_Block_Adminhtml_Sales_Calldpdcourier
+ */
+?>
+<div style="display:none" id="call_dpd_carrier_popup">
+    <form action="<?php echo $this->getControllerUrl(); ?>" method="POST">
+        <div class="shipment_info">
+            <label for="Po_parcel_qty"><input type="text" name="Po_parcel_qty" id="Po_parcel_qty" value="0"
+                                            class="validate-not-negative-number validate-digits"/><?php echo 'Parcels (≤ 31,5kg)' ?></label>
+            <label for="Po_pallet_qty"><input type="text" name="Po_pallet_qty" id="Po_pallet_qty" value="0"
+                                            class="validate-not-negative-number validate-digits"/><?php echo 'Pallets' ?></label>
+        </div>
+        <br>
+        <div class="shipment_comment">
+            <textarea name="Po_remark" id="Po_remark" cols="30" rows="3" placeholder="<?php echo 'Comment to courier' ?>"></textarea>
+        </div>
+        <input type="submit" name="submitCallCarrier" value="<?php echo 'Call carrier' ?>" onClick="callCarrier()">
+        <input type="button" value="<?php echo 'Close' ?>" onClick="hideCarrierWindow()">
+        <input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
+    </form>
+</div>

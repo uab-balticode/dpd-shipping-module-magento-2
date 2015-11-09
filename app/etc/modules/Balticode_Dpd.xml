@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Balticode_Dpd>
+            <active>true</active>
+            <codePool>community</codePool>
+            <version>0.2.0</version>
+        </Balticode_Dpd>
+    </modules>
+</config>

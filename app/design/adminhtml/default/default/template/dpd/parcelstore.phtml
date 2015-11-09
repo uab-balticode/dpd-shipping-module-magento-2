@@ -1,0 +1,90 @@
+<?php
+/**
+ * 2015 UAB BaltiCode
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License available
+ * through the world-wide-web at this URL:
+ * http://www.gnu.org/licenses/gpl-3.0.txt
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to info@balticode.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to
+ * newer versions in the future.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright   Copyright (c) 2015 UAB Balticode (http://balticode.com/)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ * @see         Balticode_Dpd_Block_Parcelstore
+ */
+?>
+<?php if (count($this->getParcelStore())):?>
+    <ul class="form-list" id="shipping_form_<?php echo $this->getRate()->getCode() ?>">
+        <li>
+            <div class="optgroup">
+                <select name="dpd_delivery_id" class="required-entry">
+                    <option value='' data-comment=''>Please select a city</option>
+                    <?php foreach ($this->getParcelStore() as $city => $data): ?>
+                        <optgroup label="<?php echo $city; ?>">
+                            <?php foreach ($data as $ps): ?>
+                                <option value="<?php echo $ps['parcelshop_id'] ?>">
+                                <?php echo $ps['company'];
+                                    if ($this->showLongNames())
+                                        echo $ps['street'];
+                                ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </optgroup>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </li>
+    </ul>
+
+    <script type="text/javascript">
+    //<![CDATA[
+        <?php if (!empty($shippingCodePrice)): ?>
+            var shippingCodePrice = {<?php echo implode(',',$shippingCodePrice); ?>};
+        <?php endif; ?>
+
+        $$('input[type="radio"][name="shipping_method"]').each(function(el) {
+            Event.observe(el, 'click', function() {
+                if (el.checked == true) {
+                    var getShippingCode = el.getValue();
+                    <?php if (!empty($shippingCodePrice)): ?>
+                        var newPrice = shippingCodePrice[getShippingCode];
+                        if (!lastPrice) {
+                            lastPrice = newPrice;
+                            quoteBaseGrandTotal += newPrice;
+                        }
+                        if (newPrice != lastPrice) {
+                            quoteBaseGrandTotal += (newPrice-lastPrice);
+                            lastPrice = newPrice;
+                        }
+                    <?php endif; ?>
+                    checkQuoteBaseGrandTotal = quoteBaseGrandTotal;
+                    return false;
+                }
+           });
+        });
+    function showShipping(code) {
+        if (jQuery('#'+'shipping_form_'+code).length != 0) {
+            jQuery('#'+'shipping_form_'+code).show();
+            jQuery(this).find('.required-entry').attr('disabled','false');
+        }
+    }
+    function hideShippingAll() {
+        jQuery('input[type="radio"][name="shipping_method"]').each(function() {
+            var code = jQuery(this).val();
+            jQuery('#'+'shipping_form_'+code).hide();
+            jQuery(this).find('.required-entry').attr('disabled','true');
+        });
+    }
+    //]]>
+    </script>
+<?php endif; ?>

@@ -1,0 +1,41 @@
+#call_dpd_carrier_popup {
+    width: 296px;
+    background: #fff;
+    border: 1px solid #111;
+    padding: 10px;
+    position: fixed;
+    top: 60px;
+    z-index: 500;
+    right: 180px;
+}
+#call_dpd_carrier_popup .time_range ,
+#call_dpd_carrier_popup .date_range ,
+#call_dpd_carrier_popup .label_info 
+{
+    text-align: left;
+    padding-left: 20px;
+}
+
+#call_dpd_carrier_popup label {
+    float: none;
+}
+
+#call_dpd_carrier_popup>div {
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+#call_dpd_carrier_popup .date_range {
+}
+#call_dpd_carrier_popup .label_info {
+}
+
+
+#call_dpd_carrier_popup .shipment_info label {
+    font-size: 8px;
+    width: 40px;
+}
+
+#call_dpd_carrier_popup .shipment_info input {
+    width: 20px;
+}

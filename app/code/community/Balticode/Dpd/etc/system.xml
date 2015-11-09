@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+     <sections>
+        <carriers>
+            <groups>
+                <dpd translate="label" module="dpd">
+                    <label>DPD</label>
+                    <sort_order>200</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <comment><![CDATA[
+                            <div style="margin-top:4px;margin-bottom:4px; color:gray;"></div>
+                            <div style="margin-top:4px;"><img src="http://balticode.com/bclogo.jpg" alt="UAB BaltiCode"><b>UAB BaltiCode, <a href="mailto:info@balticode.com">info@balticode.com</a></b></div>
+                            <hr /><br />
+                            ]]>
+                    </comment>
+                    <fields>
+<!--     GLOBAL SETTINGS START     -->
+                        <active translate="label">
+                            <label>Global Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <username translate="label">
+                            <label>Username</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>required-entry</validate>
+                        </username>
+                        <password translate="label">
+                            <label>Password</label>
+                            <frontend_type>password</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>required-entry</validate>
+                        </password>
+                        <id translate="label">
+                            <label>ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>required-entry</validate>
+                        </id>
+                        <api translate="label">
+                            <label>API URL</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>required-entry</validate>
+                        </api>
+                        <log translate="label comment">
+                            <label>Write log file on Error/Warning</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[This works when global logs is turn on]]></comment>
+                        </log>
+                        <call_courrier_enable translate="label comment">
+                            <label>Allow courier pickup</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Only if the order has been paid for or the order is COD]]></comment>
+                        </call_courrier_enable>
+                        <pickup_address_name translate="label">
+                            <label>Sender address name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>required-entry</validate>
+                        </pickup_address_name>
+                        <pickup_address_company translate="label">
+                            <label>Sender address company</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>required-entry</validate>
+                        </pickup_address_company>
+                        <pickup_address_email translate="label">
+                            <label>Sender address e-mail</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>required-entry validate-email</validate>
+                        </pickup_address_email>
+                        <pickup_address_phone translate="label">
+                            <label>Sender address phone</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>required-entry</validate>
+                        </pickup_address_phone>
+                        <pickup_address_street translate="label">
+                            <label>Sender address street</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>required-entry</validate>
+                        </pickup_address_street>
+                        <pickup_address_city translate="label">
+                            <label>Sender address city, county</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>130</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>required-entry</validate>
+                        </pickup_address_city>
+                        <pickup_address_zip translate="label">
+                            <label>Sender address zip code</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>140</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>required-entry</validate>
+                        </pickup_address_zip>
+                        <pickup_address_country translate="label">
+                            <label>Sender address country</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <sort_order>150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>required-entry</validate>
+                        </pickup_address_country>
+                        <pickup_vat_code translate="label">
+                            <label>VAT code</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>160</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>required-entry</validate>
+                        </pickup_vat_code>
+                        <manifestnr  translate="label">
+                                <label>Current manifest nr</label>
+                                <frontend_type>label</frontend_type>
+                                <sort_order>170</sort_order>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>0</show_in_website>
+                                <show_in_store>0</show_in_store>
+                        </manifestnr>
+<!--     GLOBAL SETTINGS END     -->
+
+<!--     CLASSIC SETTINGS START     -->
+                        <_courrier_title_line translate="value">
+                            <label></label>
+                            <frontend_type>label</frontend_type>
+                            <sort_order>999</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </_courrier_title_line>
+                        <classic_enabled translate="label">
+                            <label>Courrier Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1000</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </classic_enabled>
+                        <classic_title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1010</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </classic_title>
+                        <classic_price  translate="label">
+                            <label>Price</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1020</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </classic_price>
+                        <classic_free_enable translate="label">
+                            <label>Free shipping</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1030</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </classic_free_enable>
+                        <classic_free_subtotal translate="label">
+                            <label>Free shipping subtotal</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1040</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <classic_free_enable>1</classic_free_enable>
+                            </depends>
+                        </classic_free_subtotal>
+                        <carrier_price_pcode>
+                            <label>Use delivery price by postcode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1045</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </carrier_price_pcode>
+                        <classic_price_csv_import translate="label">
+                            <label>Price by CSV</label>
+                            <frontend_type>import</frontend_type>
+                            <backend_model>dpd/adminhtml_system_config_form_csvimport</backend_model>
+                            <sort_order>1050</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <carrier_price_pcode>1</carrier_price_pcode>
+                            </depends>
+                        </classic_price_csv_import>
+                        <courier_export translate="label">
+                            <label>Export</label>
+                            <button_label>Export</button_label>
+                            <frontend_type>button</frontend_type>
+                            <frontend_model>dpd/adminhtml_system_config_form_export</frontend_model>
+                            <sort_order>1051</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <carrier_price_pcode>1</carrier_price_pcode>
+                            </depends>
+                        </courier_export>
+                        <classic_show_delivery_time translate="label">
+                            <label>Show Delivery Time</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1060</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </classic_show_delivery_time>
+                        <!--classic_delivery_time  translate="label">
+                            <label>Delivery Time</label>
+                            <frontend_model>dpd/adminhtml_system_config_form_deliverytime</frontend_model>
+                            <backend_model>dpd/adminhtml_system_config_form_serialized</backend_model>
+                            <sort_order>1070</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <classic_show_delivery_time>1</classic_show_delivery_time>
+                            </depends>
+                            <comment><![CDATA[* You can select different times by holding the Ctrl key (or Cmd on Mac)]]></comment>
+                        </classic_delivery_time-->
+                        <classic_show_restrictions translate="label">
+                            <label>Package size restriction</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1080</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </classic_show_restrictions>
+                        <classic_restrictions  translate="label comment">
+                            <label>Set delivery restriction</label>
+                            <frontend_model>dpd/adminhtml_system_config_form_restriction</frontend_model>
+                            <backend_model>dpd/adminhtml_system_config_form_serialized</backend_model>
+                            <sort_order>1090</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <classic_show_restrictions>1</classic_show_restrictions>
+                            </depends>
+                            <comment><![CDATA[* -1 - Oversize / Overweight is not allowed<br>** -1 - Disabled free shipping 0 - Always free shipping]]></comment>
+                        </classic_restrictions>
+                        <classic_sallowspecific translate="label">
+                            <label>Ship to Applicable Countries</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>1100</sort_order>
+                            <source_model>adminhtml/system_config_source_shipping_allspecificcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </classic_sallowspecific>
+                        <classic_specificcountry translate="label">
+                            <label>Ship to Specific countries</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>1110</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <depends>
+                                <classic_sallowspecific>1</classic_sallowspecific>
+                            </depends>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </classic_specificcountry>
+<!--     CLASSIC SETTINGS END     -->
+
+<!--     PARCELSTORE SETTINGS START     -->
+                        <_pickup_title_line translate="value">
+                            <label></label>
+                            <frontend_type>label</frontend_type>
+                            <sort_order>1999</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </_pickup_title_line>
+                        <parcelstore_enabled translate="label">
+                            <label>ParcelStore Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>2000</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </parcelstore_enabled>
+                        <parcelstore_title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2010</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </parcelstore_title>
+                        <parcelstore_price translate="label">
+                            <label>Price</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2020</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </parcelstore_price>
+                        <parcelstore_free_enable translate="label">
+                            <label>Free shipping</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>2030</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </parcelstore_free_enable>
+                        <parcelstore_free_subtotal translate="label">
+                            <label>Free shipping subtotal</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2040</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <parcelstore_free_enable>1</parcelstore_free_enable>
+                            </depends>Ava
+                        </parcelstore_free_subtotal>
+                        <!--ps_price_csv_import translate="label">
+                            <label>Price by CSV</label>
+                            <frontend_type>import</frontend_type>
+                            <backend_model>dpd/adminhtml_system_config_form_csvimport</backend_model>
+                            <sort_order>2050</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </ps_price_csv_import>
+                        <parcelstore_export translate="label">
+                            <label>Export</label>
+                            <button_label>Export</button_label>
+                            <frontend_type>button</frontend_type>
+                            <frontend_model>dpd/adminhtml_system_config_form_export</frontend_model>
+                            <sort_order>2051</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </parcelstore_export -->
+                        <parcelstore_long_address translate="label">
+                            <label>Show long office names</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>2060</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </parcelstore_long_address>
+                        <parcelstore_city_priority translate="label">
+                            <label>City priority</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2070</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </parcelstore_city_priority>
+                        <!--parcelstore_show_restrictions translate="label">
+                            <label>Package size restriction</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>2080</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </parcelstore_show_restrictions>
+                        <parcelstore_restrictions translate="label, comment">
+                            <label>Set delivery restriction</label>
+                            <frontend_model>dpd/adminhtml_system_config_form_restriction</frontend_model>
+                            <backend_model>dpd/adminhtml_system_config_form_serialized</backend_model>
+                            <sort_order>2090</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <parcelstore_show_restrictions>1</parcelstore_show_restrictions>
+                            </depends>
+                            <comment><![CDATA[* -1 - Oversize / Overweight is not allowed<br>** -1 - Disabled free shipping 0 - Always free shipping]]></comment>
+                        </parcelstore_restrictions -->
+                        <parcelstore_sallowspecific translate="label">
+                            <label>Ship to Applicable Countries</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>2100</sort_order>
+                            <source_model>adminhtml/system_config_source_shipping_allspecificcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </parcelstore_sallowspecific>
+                        <parcelstore_specificcountry translate="label">
+                            <label>Ship to Specific countries</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>2110</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <depends>
+                                <parcelstore_sallowspecific>1</parcelstore_sallowspecific>
+                            </depends>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </parcelstore_specificcountry>
+<!--     PARCELSTORE SETTINGS END     -->
+                    </fields>
+                </dpd>
+            </groups>
+        </carriers>
+    </sections>
+</config>
