@@ -81,9 +81,9 @@ class Balticode_Dpd_Model_Carriers_Courier_Courier
      */
     public function collectRates(Mage_Shipping_Model_Rate_Request $request)
     {
-            $result = Mage::getModel('shipping/rate_result');
-            $result->append($this->getShippingRateResult());
-            return $result;
+        $result = Mage::getModel('shipping/rate_result');
+        $result->append($this->getShippingRateResult());
+        return $result;
     }
 
     /**
@@ -97,14 +97,16 @@ class Balticode_Dpd_Model_Carriers_Courier_Courier
     public function getDeliveryTime($id_delivery = null)
     {
         $delivery_time = $this->delivery_time;
-        if ($id_delivery === null)
+        if ($id_delivery === null) {
             return $delivery_time;
-        else
+        } else {
             if ($delivery_time[$id_delivery] !== null
-                && (is_string($id_delivery) || is_int($id_delivery)))
+                && (is_string($id_delivery) || is_int($id_delivery))) {
                 return $delivery_time[$id_delivery];
-            else
+            } else {
                 return false;
+            }
+        }
     }
 
     /**
@@ -116,8 +118,9 @@ class Balticode_Dpd_Model_Carriers_Courier_Courier
     public function collectParams($parameters)
     {
         $return = array();
-        if (isset($parameters['dpd_delivery_strip']))
+        if (isset($parameters['dpd_delivery_strip'])) {
             $return[$this->key]['dpd_delivery_strip'] = $parameters['dpd_delivery_strip'];
+        }
         return $return;
     }
 
@@ -130,8 +133,7 @@ class Balticode_Dpd_Model_Carriers_Courier_Courier
     public function getShippingDescription($orderId, $currentDescription = '')
     {
         $deliveryTimeId = $this->getDeliveryTimeByOrder($orderId);
-        if ($deliveryTimeId !== false)
-        {
+        if ($deliveryTimeId !== false) {
             $label = 'Delivery time: ';
             return $currentDescription.' / '.__($label).$this->delivery_time[$deliveryTimeId];
         }
@@ -148,14 +150,17 @@ class Balticode_Dpd_Model_Carriers_Courier_Courier
     {
         $order = Mage::getModel('sales/order')->load($orderId);
         $deliveryOptionSerialize = $order->getDpdDeliveryOptions();
-        if ($deliveryOptionSerialize === null)
+        if ($deliveryOptionSerialize === null) {
             return false;
+        }
         $deliveryOptionArray = unserialize($deliveryOptionSerialize);
 
         $optionKey = array_keys($deliveryOptionArray); //classic or PS
-        if (count($optionKey))
-            if ($optionKey[0] == $this->key)
+        if (count($optionKey)) {
+            if ($optionKey[0] ==  $this->key) {
                 return $deliveryOptionArray[$this->key]['dpd_delivery_strip'];
+            }
+        }
 
         return false;
     }
@@ -194,10 +199,11 @@ class Balticode_Dpd_Model_Carriers_Courier_Courier
      */
     public function getType($order_id)
     {
-        if ($this->isCodMethod($order_id))
+        if ($this->isCodMethod($order_id)) {
             return 'D-COD-B2C'; //Classic with CashOnDelivery
-        else
+        } else {
             return 'D-B2C'; //Classic
+        }
     }
 
     /**
@@ -216,44 +222,36 @@ class Balticode_Dpd_Model_Carriers_Courier_Courier
         $orderItems = 0;
         $ordersPrice = 0;
         //If given multiple orders validate to same shipping address
-        if (is_array($ordersId))
-        {
-            foreach ($ordersId as $orderId)
-            {
+        if (is_array($ordersId)) {
+            foreach ($ordersId as $orderId) {
                 //If this is array or object skip (this in case)
-                if (is_array($orderId) || is_object($orderId))
+                if (is_array($orderId) || is_object($orderId)) {
                     continue;
+                }
                 $order = Mage::getModel('sales/order')->load($orderId);
                 $weight += $order->getWeight();
                 $test[$order->getShippingAddress()->getCustomerAddressId()] = $orderId;
                 $deliveryTime[] = $order->getDpdDeliveryOptions();
                 $orderItems += count($order->getAllVisibleItems());
                 $ordersPrice += (float)Mage::helper('dpd/data')
-                ->convertCurrency(
-                    (float)$order->getGrandTotal(),
-                    $order->getOrderCurrencyCode()
-                );
+                    ->convertCurrency((float)$order->getBaseGrandTotal());
             }
             //Something is wrong we have different shipping address id
-            if (count($test) !== 1)
+            if (count($test) !== 1) {
                 return false;
+            }
         } else {
             $order = Mage::getModel('sales/order')->load((int)$ordersId);
             $ordersPrice += (float)Mage::helper('dpd/data')
-            ->convertCurrency(
-                (float)$order->getGrandTotal(),
-                $order->getOrderCurrencyCode()
-            );
+                ->convertCurrency((float)$order->getBaseGrandTotal());
             $weight = $order->getWeight();
             $deliveryTime[] = $order->getDpdDeliveryOptions();
         }
 
         //collect delivery times
-        foreach ($deliveryTime as $time)
-        {
+        foreach ($deliveryTime as $time) {
             $time = unserialize($time);
-            if (!empty($time)) //if time is set
-            {
+            if (!empty($time)) { //if time is set
                 $time_strip = array_values($time); //unserialize
                 $time_strip = array_values($time_strip[0]);
                 $time_number = array_filter(explode('-', $this->delivery_time[$time_strip[0]]));
@@ -272,13 +270,11 @@ class Balticode_Dpd_Model_Carriers_Courier_Courier
             'pcode' => preg_replace('/\D/', '', $shippingAddress->getPostcode()),
             'country' => strtoupper($shippingAddress->getCountryId()),
             'city' => $shippingAddress->getCity(),
-
             'weight' => ($weight)?$weight:'1',
-
-            //'Sh_contact' => $shippingAddress->getName(),
+        //  'Sh_contact' => $shippingAddress->getName(),
             'phone' => $shippingAddress->getTelephone(),
-        //    'remark' => $this->_getRemark($order),
-         //   'Po_type' => $this->getConfigData('senddata_service'),
+        //  'remark' => $this->_getRemark($order),
+        //  'Po_type' => $this->getConfigData('senddata_service'),
             'num_of_parcel' => $num_of_parcel,
             'order_number' => str_pad((int)$order->getIncrementId() + $this->addictional_order_number, 10, '0', STR_PAD_LEFT),
             'idm' => 'Y', //Parcelshop is required the idm parameters
@@ -294,16 +290,21 @@ class Balticode_Dpd_Model_Carriers_Courier_Courier
         );
 
         if ($this->isCodMethod($order->getId())) {
-            $returnDetails['cod_amount'] = (float)$ordersPrice;
+            $returnDetails['cod_amount'] = (float)round($ordersPrice,2);
         }
 
         if (count($ordersId) === count($time_interval['from'])
             && count($ordersId) === count($time_interval['to'])
             && count($time_interval['from']) > 0
-            && count($time_interval['to']) > 0)
-        {
-            $returnDetails['timeframe_from'] = Mage::getModel('dpd/data')->toTimeStamp(date('H:i', min($time_interval['from'])), 'H:i'); //Syntax of the value HH24:MI, example 14:00
-            $returnDetails['timeframe_to'] = Mage::getModel('dpd/data')->toTimeStamp(date('H:i', max($time_interval['to'])), 'H:i'); //Syntax of the value HH24:MI, example 14:00
+            && count($time_interval['to']) > 0) {
+            $returnDetails['timeframe_from'] = Mage::getModel('dpd/data')->toTimeStamp(
+                date('H:i', min($time_interval['from'])),
+                'H:i'
+            ); //Syntax of the value HH24:MI, example 14:00
+            $returnDetails['timeframe_to'] = Mage::getModel('dpd/data')->toTimeStamp(
+                date('H:i', max($time_interval['to'])),
+                'H:i'
+            ); //Syntax of the value HH24:MI, example 14:00
         }
 
         return $returnDetails;
@@ -348,6 +349,7 @@ class Balticode_Dpd_Model_Carriers_Courier_Courier
         $rate->setMethodTitle(Mage::helper('dpd/data')->getConfigData('classic_title'));
         $rate->setPrice($price);
         $rate->setCost($price);
+
         return $rate;
     }
 
@@ -402,7 +404,7 @@ class Balticode_Dpd_Model_Carriers_Courier_Courier
 
             $dimension = explode('X', strtoupper($carrier_package_size_option['dimensions']));
             array_filter($dimension);
-            if (count($dimension) !== 3) {//If wrong parsing skip this line
+            if (count($dimension) !== 3) { //If wrong parsing skip this line
                 continue;
             }
 
@@ -504,7 +506,6 @@ class Balticode_Dpd_Model_Carriers_Courier_Courier
         }
 
         return $currentPrice; //Return final price
-
     }
 
     /**
@@ -569,8 +570,9 @@ class Balticode_Dpd_Model_Carriers_Courier_Courier
         }
 
         //We no not found any restriction by this cart so this method is not available... return false
-        if (!count($correctRestriction))
+        if (!count($correctRestriction)) {
             return false;
+        }
 
         //Now we have one restriction, from where need get price
         if ($correctRestriction['free_from_price'] > -1) { //If free shipping is allowed
@@ -635,13 +637,13 @@ class Balticode_Dpd_Model_Carriers_Courier_Courier
     public function getCartProductsDimensions($quote)
     {
         $dimensions = array(
-                'id_product' => array(),
-                'quantity' => array(),
-                'height' => array(),
-                'width' => array(),
-                'depth' => array(),
-                'diagonal' => array(),
-            );
+            'id_product' => array(),
+            'quantity' => array(),
+            'height' => array(),
+            'width' => array(),
+            'depth' => array(),
+            'diagonal' => array(),
+        );
 
         $quoteProducts = $quote->getAllItems();
         $catalogProduct = Mage::getModel('catalog/product');
@@ -676,9 +678,9 @@ class Balticode_Dpd_Model_Carriers_Courier_Courier
     public function getRescrictionPrice($product, $rescriction, $cartPrice = 0)
     {
         $price = array(
-                'regular' => (float)0,
-                'additional' => (float)0,
-            );
+            'regular' => (float)0,
+            'additional' => (float)0,
+        );
 
         if ($product['height'] <= $rescriction['dimensions']['height']
             && $product['width'] <= $rescriction['dimensions']['width']
@@ -691,8 +693,8 @@ class Balticode_Dpd_Model_Carriers_Courier_Courier
 
             $price['regular'] = (float)$rescriction['base_price']; //Return base shipping price
             return $price;
-        } else {//Package size is to high
-            if ((float)$rescriction['oversized_price'] == (float)-1) {//Oversize is not disallowed?
+        } else { //Package size is to high
+            if ((float)$rescriction['oversized_price'] == (float)-1) { //Oversize is not disallowed?
                 return false; //Cannot ship this product
             } else { //Oversize is allowed
                 if ($rescriction['oversized_price'] >= 0) {//Oversize price is correct?
@@ -702,7 +704,8 @@ class Balticode_Dpd_Model_Carriers_Courier_Courier
                             return $price;
                         }
                     $price = array('regular' => (float)$rescriction['base_price'],
-                                'additional' => (float)($rescriction['oversized_price'] * $product['quantity']));
+                        'additional' => (float)($rescriction['oversized_price'] * $product['quantity'])
+                    );
                     return $price;
                 } else {
                     self::log('getRescrictionPrice -> Oversize price is not correct given: '.$rescriction['oversized_price']);

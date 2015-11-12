@@ -139,6 +139,9 @@ class Balticode_Dpd_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function convertCurrency($price, $currentCurrencyCode = null, $baseCurrencyCode = 'EUR')
     {
+        if (is_null($currentCurrencyCode)) {
+            $currentCurrencyCode = Mage::app()->getStore()->getBaseCurrencyCode();
+        }
         return Mage::helper('directory')->currencyConvert($price, $currentCurrencyCode, $baseCurrencyCode);
     }
 
