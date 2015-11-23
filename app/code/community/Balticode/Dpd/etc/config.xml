@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Balticode_Dpd>
-            <version>0.2.1</version>
+            <version>0.2.2</version>
         </Balticode_Dpd>
     </modules>
     <global>
@@ -183,4 +183,16 @@
             </dpd>
         </carriers>
     </default>
+    <crontab>
+        <jobs>
+            <balticode_dpd_update_parcelstores_data>
+                <schedule>
+                    <cron_expr>0 12 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>dpd/deliverypoints::generateDeliveryPoints</model>
+                </run>
+            </balticode_dpd_update_parcelstores_data>
+        </jobs>
+    </crontab>
 </config>
