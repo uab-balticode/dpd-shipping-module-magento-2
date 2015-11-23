@@ -61,6 +61,7 @@
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
                             <validate>required-entry</validate>
+                            <comment><![CDATA[<ul><li><b>Live:</b> https://weblabel.dpd.lt/parcel_interface/</li></ul>]]></comment>
                         </api>
                         <log translate="label comment">
                             <label>Write log file on Error/Warning</label>

@@ -116,7 +116,7 @@
             </tr>
         <?php $value_total+=$this->getOrderData($orderId, 'weight'); ?>
         <?php $total_qty_ordered += $this->getOrder($orderId)->getData('total_qty_ordered'); ?>
-        <? } ?>
+        <?php } ?>
         <tr>
             <td class="bold"><?php echo __('Total'); ?></td>
             <td colspan="3">&nbsp;</td>
