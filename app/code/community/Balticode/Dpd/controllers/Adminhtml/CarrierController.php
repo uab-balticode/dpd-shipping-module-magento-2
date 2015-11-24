@@ -60,17 +60,16 @@ class Balticode_Dpd_Adminhtml_CarrierController
             'senderCountry' => Mage::helper('dpd/data')->getConfigData('pickup_address_country'),
             'senderCity' => Mage::helper('dpd/data')->getConfigData('pickup_address_city'),
             'senderPhone' => Mage::helper('dpd/data')->getConfigData('pickup_address_phone'),
-            'action' => 'dpdis/pickupOrdersSave',
             'parcelsCount' => $this->_collectPostData('Po_parcel_qty'),
             'palletsCount' => $this->_collectPostData('Po_pallet_qty'),
             'nonStandard' => $this->_collectPostData('Po_remark'),
         );
 
         $responce = $api->postData($parameters);
-        if ($responce == 'DONE') {
+        if (strip_tags($responce) == 'DONE') {
             Mage::getSingleton('adminhtml/session')->addSuccess(__('Call courier success'));
         } else {
-            Mage::getSingleton('adminhtml/session')->addError(__('Call courier error: '.$responce));
+            Mage::getSingleton('adminhtml/session')->addError(__('Call courier error: '.strip_tags($responce)));
         }
     }
 
